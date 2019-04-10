@@ -1,0 +1,28 @@
+//Revision for taking input of burst time while setting up the logic of handling exception from user
+//use of STL vector for input of BT
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
+using namespace std;
+int main()
+{
+vector<int> BT;
+int AT[5],WT[5],TRT[5],CT[5];
+cout<<"\nENTER BURST TIME FOR FIVE PROCESSESS PRESS 'E' or 'e' WHEN YOU COMPLETE ENTERING DATA**\n";
+int data,count=0;
+while(cin>>data)	
+{
+BT.push_back(data);
+count++;	
+}
+if(count!=5)
+{
+cout<<"\nERROR!CANNOT ACCESS Please Enter 5 Values";
+return -1;
+}
+else
+for(int i=0;i<BT.size();i++)
+cout<<BT[i];
+}//end of main
