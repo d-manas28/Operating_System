@@ -1,0 +1,87 @@
+//This is the Final and Complete working module of First come First Serve algorithm
+//The module consists of the part of previous revision belonging to the same project
+//Systematic representation of the table in the output
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
+using namespace std;
+int main()
+{
+vector<int> BT;
+int AT[5],WT[5],TRT[5],CT[5];
+int data,count=0;
+float avgw;
+float avgt;
+int i1,i2;
+//---------------------------------//
+//BLOCK 01 FOR ENTERING BURST TIME
+cout<<"\t******WELCOME******\n";
+//cin>>i1;
+cout<<" **DO FOLLOW INSTRUCTIONS CAREFULLY AS MENTIONED**    ";
+//cin>>i2;
+cout<<"\nENTER BURST TIME FOR FIVE PROCESSESS\n**Instruction 01:PRESS 'E' or 'e' WHEN YOU COMPLETE ENTERING DATA**\n";
+while(cin>>data)	
+{
+BT.push_back(data);
+count++;	
+}
+if(count!=5)
+{
+cout<<"\nERROR!CANNOT ACCESS Please Enter 5 Values";
+return -1;
+}
+//BLOCK 1 ENDED HERE//
+//---------------------------------------//
+else
+{
+//BLOCK 2- FOR ARRIVAL TIME
+for(int i=0;i<5;i++)
+{
+AT[i] = 0;
+}
+//BLOCK 2 ENDED HERE
+//-----------------------------------
+//BLOCK 3 FOR COMPLETION TIME
+CT[0] = BT[0];
+for(int i=1;i<5;i++)
+{
+CT[i] = BT[i] + CT[i-1];
+}
+cout<<endl;
+//BLOCK 3 COMPLETES HERE
+//---------------------------------
+
+//BLOCK 4 FOR Turn Around TIME
+int totalt = 0;
+for(int i=0;i<5;i++)
+{
+TRT[i] = CT[i]-AT[i];
+totalt = totalt + TRT[i];
+}
+avgt = (float)totalt/5;
+//BLOCK 4 ENDS HERE 
+//------------------------
+
+//Block 5 for Waiting Time
+int totalw = 0;
+for(int i=0;i<5;i++)
+{
+WT[i] = TRT[i]-BT[i];
+totalw = totalw + WT[i];	
+}
+avgw = (float)totalw/5;
+//Block 5 ends here
+//----------------------------
+cout<<"Process\t Arrival Time\t  Burst Time\tCompletion Time\t Turn Around TIme\tWaiting Time"<<"\n";
+for(int i=0;i<5;i++)
+{
+cout<<"P["<<i<<"]"<<"\t\t"<<AT[i]<<"\t\t"<<BT[i]<<"\t\t"<<CT[i]<<"\t\t"<<TRT[i]<<"\t\t"<<WT[i]<<"\n";	
+}
+cout<<"\nAVERAGE TURN AROUND TIME IS:= "<<avgt<<" ms";
+cout<<"\nAVERAGE WAITING TIME IS:= "<<avgw<<" ms";
+cout<<"\nNOTE:= ALL THE SPECIFIED VALUES ARE IN MS(Milli Seconds)";
+return 0;
+}
+}//end of main
