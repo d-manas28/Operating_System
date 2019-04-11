@@ -1,0 +1,71 @@
+//Revision for taking input of burst time while setting up the logic of handling exception from user
+//use of STL vector for input of BT
+//logic for CT,TRT,WT,AT
+//logic for calculating average of waiting time and turn around time
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
+using namespace std;
+int main()
+{
+vector<int> BT;
+int AT[5],WT[5],TRT[5],CT[5];
+cout<<"\nENTER BURST TIME FOR FIVE PROCESSESS PRESS 'E' or 'e' WHEN YOU COMPLETE ENTERING DATA**\n";
+int data,count=0;
+while(cin>>data)	
+{
+BT.push_back(data);
+count++;	
+}
+if(count!=5)
+{
+cout<<"\nERROR!CANNOT ACCESS Please Enter 5 Values";
+return -1;
+}
+else
+{
+for(int i=0;i<BT.size();i++)
+cout<<BT[i];
+//BLOCK 2- FOR ARRIVAL TIME
+for(int i=0;i<5;i++)
+{
+AT[i] = 0;
+}
+//BLOCK 2 ENDED HERE
+//-----------------------------------
+
+//BLOCK 3 FOR COMPLETION TIME
+CT[0] = BT[0];
+for(int i=1;i<5;i++)
+{
+CT[i] = BT[i] + CT[i-1];
+}
+cout<<endl;
+//BLOCK 3 COMPLETES HERE
+//---------------------------------
+
+//BLOCK 4 FOR Turn Around Time
+int totalt = 0;
+for(int i=0;i<5;i++)
+{
+TRT[i] = CT[i]-AT[i];
+totalt = totalt + TRT[i];
+}
+avgt = (float)totalt/5;
+//BLOCK 4 ENDS HERE 
+//------------------------
+
+//Block 5 for Waiting Time
+int totalw = 0;
+for(int i=0;i<5;i++)
+{
+WT[i] = TRT[i]-BT[i];
+totalw = totalw + WT[i];	
+}
+avgw = (float)totalw/5;
+//Block 5 ends here
+//----------------------------
+}//end of else
+}//end of main
