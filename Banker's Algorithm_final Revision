@@ -1,0 +1,94 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
+using namespace std;
+
+void check(int pro[],int available[],int max[][3],int allocated[][3])
+{
+int count = 0;
+int need[5][3];
+for(int i=0;i<5;i++)
+{for(int j=0;j<5;j++)
+	{
+	 need[i][j] = max[i][j] - allocated[i][j];	
+	}
+}
+//As per algorithm need to take 2 vectors
+//finish and work
+bool finish[5] = {0,0,0,0,0};//initialing all process state false
+int seq[5];//to store safe sequence
+int w[3];
+bool fo = false;
+for(int i=0;i<3;i++)
+{
+w[i] = available[i];
+}
+while(count < 5)
+{
+	for(int i=0;i<5;i++)
+	{
+	if(finish[i] == 0)
+	{ int j;
+		for(j=0;j<3;j++)
+		{
+		  if(need[i][j] > w[j])
+		  break;	
+		}
+		
+		if(j == 3)
+		{
+		 for(int k =0;k<3;k++)	
+		 w[k] = w[k]+allocated[i][k];	
+		
+		 seq[count] = i;
+		 count++;
+		 finish[i] = 1;
+		 fo = true;
+		}
+	}	
+	}
+if(fo = false)
+{
+cout<<"WARNING!! The System is Not in Safe State";	
+}	
+}//end of while
+
+
+
+//block to represent the safe state
+cout<<"\nTHE PROCESS WILL BE EXECUTED AS THE SYSTEM IS IN THE SAFE STATE:";
+cout<<"\nSEQUENCE OF THE SAFE STATE IS:\n";
+for(int i=0;i<5;i++)
+cout<<"P"<<seq[i]<<" ";
+}//end of function
+
+//main function
+int main()
+{
+char enter;	
+//pro is processess and available is for instances of resource	
+int pro[5],available[3];
+//max matrix is been allocated the respective values
+int max[5][3]={{7,5,3},{3,2,2},{9,0,2},{2,2,2},{4,3,3}};
+//allocated matrix is been allocated the respective values
+int allocated[5][3]={{0,1,0},{2,0,0},{3,0,2},{2,1,1},{0,0,2}};
+available[0] = 3;
+available[1] = 3;
+available[2] = 2;
+cout<<"\t**BANKER'S ALGORITHM FOR DEADLOCK AVOIDANCE**";
+cout<<"\n~~Table-01: Depicting the initial state of the processes:\n";
+cout<<"\n  PROCESS   ALLOCATED    MAX    NEED    AVAILABLE";
+cout<<"\n  -------   ---------    ---    ----    ---------";
+cout<<"\n    P0         010       753    743         332";
+cout<<"\n    P1         200       322    122         000";
+cout<<"\n    P2         302       902    600         000";
+cout<<"\n    P3         211       222    011         000";
+cout<<"\n    P4         002       433    431         000";
+cout<<"\nPress Any Character to Check the Stability of the Matrix\n";
+if(cin>>enter)
+	check(pro,available,max,allocated);
+return 0;
+}//end of main
+
+Reference Site:GeeksForGeeks_Banker's Algorithm_safety State
